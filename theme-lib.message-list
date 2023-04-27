@@ -8,8 +8,9 @@
  
 <#-- page size -->
 //this line gets the value from the coreNode object and if there is no value set there, it sets the default value, which is given in the second argument.
-//that's why I set this value to 30, also I think you can do only pageSize=30, but then you won't be able to change it from CMS
-<#assign pageSize = coreNode.settings.name.get("layout.messages_per_page_linear", "30")?number />
+//<#assign pageSize = coreNode.settings.name.get("layout.messages_per_page_linear", "10")?number />
+//that's why I set value only to 30, but now you won't be able to change it from CMS
+<#assign pageSize = 30 />
 <#if user.registered>
    <#assign pageSizeUser = settings.name.get("layout.messages_per_page_linear") />
    <#if pageSizeUser?number != pageSize?number>
