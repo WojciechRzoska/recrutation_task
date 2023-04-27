@@ -141,6 +141,16 @@
     font-weight: bold;
 }
 
+@media (max-width: 900px) {
+.benefits-content-list  {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-items: center;
+}
+.benefits-content-list-icon > img:hover {
+    height: 70px;
+}
+}
 /* Join page - join component */
 
 .join-wrapper {
@@ -218,6 +228,13 @@
    line-height: 30px;
    font-weight: 300;
    justify-content: center;
+}
+.map-content-google > a{
+color:white;
+background-color: violet;
+
+
+
 }
 
 /*Join page - Testimonials component*/
@@ -311,7 +328,7 @@
 
 #testimonials-carousel > .carousel-indicators > li {
     display: inline-block;
-    width: calc(100% / 4 - 50px);
+    width: calc(100% / 6 - 50px);
     height: 0.6rem;
     margin: 20px;
     text-indent: -999px;
@@ -323,7 +340,7 @@
 
 #testimonials-carousel .carousel-indicators .active {
     display: inline-block;
-    width: calc(100% / 4 - 50px);
+    width: calc(100% / 6 - 50px);
     height: 0.6rem;
     margin: 20px;
     text-indent: -999px;
@@ -840,6 +857,7 @@ span.lia-button-link-arrow.lia-button-link-arrow-black {
     <li data-target="#testimonials-carousel" data-slide-to="1"></li>
     <li data-target="#testimonials-carousel" data-slide-to="2"></li>
     <li data-target="#testimonials-carousel" data-slide-to="3"></li>
+    <li data-target="#testimonials-carousel" data-slide-to="4"></li>
   </ol>
 
   <div class="carousel-inner">
@@ -926,6 +944,27 @@ span.lia-button-link-arrow.lia-button-link-arrow-black {
         </div>
      </div>
     </div>
+
+    <div class="item">
+      <div class="testimonials-quote-wrap">
+       <div class="testimonials-quote-element">
+         <div class="testimonials-quote">
+           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti obcaecati, quasi sint inventore labore dignissimos debitis suscipit consequatur tempora minus culpa magnam repellendus, quae corporis nostrum ipsam amet hic molestias.</p>
+           <img class="testimonial-quote-mark-1" src="https://community.dynatrace.com/html/assets/quote_black.png">
+           <img class="testimonial-quote-mark-2" src="https://community.dynatrace.com/html/assets/quote_black.png">
+         </div>
+       </div>
+         <div class="testimonials-picture">
+           <div class="testimonials-picture-avatar">
+             <img src="https://xsgames.co/randomusers/assets/avatars/male/46.jpg"></img>
+           </div>
+           <div class="testimonials-picture-name">
+             <h2>Jan Nowak</h2>
+             <p>Junior</p>
+           </div>
+         </div>
+      </div>
+     </div>
 
   <a class="left carousel-control" href="#testimonials-carousel" data-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -1034,6 +1073,6 @@ span.lia-button-link-arrow.lia-button-link-arrow-black {
     </div>
   </div>
 </div>
-
+<script src="register-page-script.js"></script>
 </body>
 </html>
