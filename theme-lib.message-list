@@ -7,7 +7,9 @@
 <#assign sorting = http.request.parameters.name.get("sort", "") />
  
 <#-- page size -->
-<#assign pageSize = coreNode.settings.name.get("layout.messages_per_page_linear", "10")?number />
+//this line gets the value from the coreNode object and if there is no value set there, it sets the default value, which is given in the second argument.
+//that's why I set this value to 30, also I think you can do only pageSize=30, but then you won't be able to change it from CMS
+<#assign pageSize = coreNode.settings.name.get("layout.messages_per_page_linear", "30")?number />
 <#if user.registered>
    <#assign pageSizeUser = settings.name.get("layout.messages_per_page_linear") />
    <#if pageSizeUser?number != pageSize?number>
@@ -35,6 +37,7 @@
 <#assign whereClause = label_query />
  
 <#switch sorting>
+
    <#case "kudos">
        <#assign orderClause = "ORDER BY kudos.sum(weight) DESC " />
    <#break>
@@ -44,6 +47,26 @@
    <#case "replies">
        <#assign orderClause = "ORDER BY replies.count(*) DESC " />
    <#break>
+   //Here I create order methods to new created options in select 
+   <#case "post_time">
+        //order clausule to post time from the newest to oldest 
+        //the clausule get post_time from message table and order it in DESC method so newest messages will be on the top
+        <#assign orderClause = "ORDER BY message.post_time DESC " />
+    <#break>
+    <#case "kudos_lowest">
+        //order clausule to get lowest number of kudos first
+        //Method ORDER ordering sum of kudos and order it from lowest to highest thats why I use ASC here.
+        <#assign orderClause = "ORDER BY kudos.sum(weight) ASC" />
+    <#break>
+    <#case "unanswered">
+        //order clausule, first counting all replies and order it in ASC priority thats why first messeges would have 0 replies
+        <#assign orderClause = "ORDER BY replies.count(*) ASC " />
+    <#break>
+    <#case "no_solution">
+        //the same case like higher, I take status of conversation solved or no and order it by ASC so first I should have no solution
+        //I think solved should have 0 or 1 value, 0 for not solved and 1 for solved then it should work 
+        <#assign orderClause = "ORDER BY conversation.solved ASC " />
+    <#break>
    <#default>
        <#assign orderClause = "ORDER BY conversation.last_post_time DESC " />
    <#break>
@@ -76,6 +99,12 @@
                    <option value="views" <#if sorting == 'views'>selected</#if>>${text.format("theme-lib.community-activity.views")}</option>
                    <option value="replies" <#if sorting == 'replies'>selected</#if>>${text.format("theme-lib.community-activity.replies")}</option>
                    <option value="kudos" <#if sorting == 'kudos'>selected</#if>>${text.format("theme-lib.community-activity.kudos")}</option>
+                   //Here I create options for my case in switch loop
+                   //I was inspired by the examples above
+                   <option value="post_time" <#if sorting == 'post_time'>selected</#if>${text.format("theme-lib.community-activity.post_time")}</option>
+                   <option value="kudos_lowest" <#if sorting == 'kudos_lowest'>selected</#if>${text.format("theme-lib.community-activity.kudos_lowest")}</option>
+                   <option value="unanswered" <#if sorting == 'unanswered'>selected</#if>>${text.format("theme-lib.community-activity.unanswered")}</option>
+                   <option value="no_solution" <#if sorting == 'no_solution'>selected</#if>>${text.format("theme-lib.community-activity.no-solution")}</option>
                </select>
                <#if page.interactionStyle=="idea">
                  <@component id="custom.idea.status.label" />
@@ -149,7 +178,8 @@
        <#assign msg_status_txt = "theme-lib.general.thread-floated" />
    </#if>
    <#if msg.conversation.solved>
-       <#assign solved = "custom-thread-solved" />
+   //Here I change name of solved class
+       <#assign solved = "my-custom-thread-solved" />
        <#assign msg_status_icon = "custom-thread-solved" />
        <#assign msg_status_txt = "theme-lib.general.thread-solved" />
    </#if>
